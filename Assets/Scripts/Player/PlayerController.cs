@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-//using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public int playerLives = 5;
     public float playerSpeed = 5.0f;
 
     PlayerControls controls;

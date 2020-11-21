@@ -1,18 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    int hiScore;
+    int score = 0;
+
+    public Text hiScoreText;
+
+    private void Awake()
     {
-        
+        DontDestroyOnLoad(gameObject);
+        hiScore = PlayerPrefs.GetInt("hiscore");
+        hiScoreText.text = "HI SCORE: " + hiScore;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GameOver()
     {
-        
+        if (score > hiScore)
+        {
+            hiScore = score;
+            PlayerPrefs.SetInt("score", hiScore);
+            PlayerPrefs.Save();
+            score = 0;
+        }
     }
 }
