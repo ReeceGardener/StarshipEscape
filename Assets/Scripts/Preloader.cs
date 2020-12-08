@@ -2,34 +2,19 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public class Preloader : MonoBehaviour
 {
-    public static SceneLoader instance { set; get; }
-
     public GameObject loadingScreen;
-    public GameObject[] gameUI;
 
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
-
-    public void LoadLevel(int level)
-    {
-        StartCoroutine(LoadAsychronously(level));
+        StartCoroutine(LoadAsychronously(1));
     }
 
     IEnumerator LoadAsychronously(int sceneIndex)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
-
-        foreach (GameObject UI in gameUI)
-        {
-            UI.SetActive(false);
-        }
 
         loadingScreen.SetActive(true);
 

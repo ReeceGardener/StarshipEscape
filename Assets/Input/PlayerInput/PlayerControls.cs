@@ -33,6 +33,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""FireGun"",
+                    ""type"": ""Button"",
+                    ""id"": ""264b5ae5-8564-4422-9655-9e38831ccaa9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""14e09c13-7756-418c-a3f8-aea1ea680b87"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -79,6 +95,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""MoveRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""193e2e73-0959-4e67-bc0f-506bfc40c0aa"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FireGun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8e4d1ec9-69c2-43d2-a4d1-f38fc14607f4"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -89,6 +127,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_MoveForward = m_Gameplay.FindAction("MoveForward", throwIfNotFound: true);
         m_Gameplay_MoveRight = m_Gameplay.FindAction("MoveRight", throwIfNotFound: true);
+        m_Gameplay_FireGun = m_Gameplay.FindAction("FireGun", throwIfNotFound: true);
+        m_Gameplay_Run = m_Gameplay.FindAction("Run", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -140,12 +180,16 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_MoveForward;
     private readonly InputAction m_Gameplay_MoveRight;
+    private readonly InputAction m_Gameplay_FireGun;
+    private readonly InputAction m_Gameplay_Run;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveForward => m_Wrapper.m_Gameplay_MoveForward;
         public InputAction @MoveRight => m_Wrapper.m_Gameplay_MoveRight;
+        public InputAction @FireGun => m_Wrapper.m_Gameplay_FireGun;
+        public InputAction @Run => m_Wrapper.m_Gameplay_Run;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -161,6 +205,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @MoveRight.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveRight;
                 @MoveRight.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveRight;
                 @MoveRight.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveRight;
+                @FireGun.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFireGun;
+                @FireGun.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFireGun;
+                @FireGun.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFireGun;
+                @Run.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
+                @Run.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
+                @Run.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -171,6 +221,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @MoveRight.started += instance.OnMoveRight;
                 @MoveRight.performed += instance.OnMoveRight;
                 @MoveRight.canceled += instance.OnMoveRight;
+                @FireGun.started += instance.OnFireGun;
+                @FireGun.performed += instance.OnFireGun;
+                @FireGun.canceled += instance.OnFireGun;
+                @Run.started += instance.OnRun;
+                @Run.performed += instance.OnRun;
+                @Run.canceled += instance.OnRun;
             }
         }
     }
@@ -179,5 +235,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnMoveForward(InputAction.CallbackContext context);
         void OnMoveRight(InputAction.CallbackContext context);
+        void OnFireGun(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
     }
 }

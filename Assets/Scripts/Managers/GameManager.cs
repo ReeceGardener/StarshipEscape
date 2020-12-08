@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
 {
-    int hiScore;
-    int score = 0;
+    public static GameManager instance { set; get; }
+
+    public int hiScore;
+    public int score = 0;
 
     public Text hiScoreText;
 
@@ -15,7 +15,14 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         hiScore = PlayerPrefs.GetInt("hiscore");
-        hiScoreText.text = "HI SCORE: " + hiScore;
+    }
+
+    private void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
     public void GameOver()
