@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuButtons: {fileID: 0}
+  hiScoreText: {fileID: 0}
+  sceneLoader: {fileID: 0}
