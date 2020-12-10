@@ -8,7 +8,7 @@ public class BlasterGun : MonoBehaviour
     public int gunDamage = 25;
     public GameObject impactEffect;
     public Transform rayStart;
-    public Transform rayEnd;
+    Vector3 rayEnd;
 
     private RaycastHit hit;
     private Ray ray;
@@ -24,7 +24,8 @@ public class BlasterGun : MonoBehaviour
 
     void FireGun()
     {
-        ray = new Ray(rayStart.position, rayEnd.position);
+        rayEnd = rayStart.localPosition * 20;
+        ray = new Ray(rayStart.position, rayEnd);
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
