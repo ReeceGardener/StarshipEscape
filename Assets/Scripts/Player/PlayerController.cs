@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public int health = 100;                                            
 
     [Header("Movement Settings")]
-    public float playerSpeed = 5.0f;
+    public int playerSpeed = 5;
     public float turnSpeed = 5.0f;
 
     PlayerControls controls;
@@ -73,11 +72,13 @@ public class PlayerController : MonoBehaviour
     void Run()
     {
         Debug.Log("Player is running");
+        playerSpeed = 10;
     }
 
     void Walk()
     {
         Debug.Log("Player is walking");
+        playerSpeed = 5;
     }
 
     void OnEnable()

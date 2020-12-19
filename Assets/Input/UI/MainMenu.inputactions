@@ -1,0 +1,44 @@
+{
+    "name": "MainMenu",
+    "maps": [
+        {
+            "name": "MenuContol",
+            "id": "7be4416b-e4cb-412b-8239-1439abde28d1",
+            "actions": [
+                {
+                    "name": "MoveSelection",
+                    "type": "Button",
+                    "id": "7b19d1e4-3235-4ea0-9069-4dda304cb825",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "32a6f68b-013e-4a0c-b364-dfc6b6e315b9",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "Scale(factor=-1)",
+                    "groups": "",
+                    "action": "MoveSelection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ed637c4c-3196-4e77-8493-730ab2e32232",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "Scale",
+                    "groups": "",
+                    "action": "MoveSelection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

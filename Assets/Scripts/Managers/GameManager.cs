@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         if (score > hiScore)
         {
             hiScore = score;
-            PlayerPrefs.SetInt("score", hiScore);
+            PlayerPrefs.SetInt("hiscore", hiScore);
             PlayerPrefs.Save();
             score = 0;
         }
