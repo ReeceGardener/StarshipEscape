@@ -3,13 +3,9 @@
 public class BlasterGun : MonoBehaviour
 {
     [Header("Gun Settings")]
-    public int gunDamage = 25;
-    public GameObject impactEffect;
-    public Transform rayStart;
-    Vector3 rayEnd;
-
-    private RaycastHit hit;
-    private Ray ray;
+    public Transform firepoint;
+    public GameObject bulletPrefab;
+    public float bulletForce = 20f;
 
     PlayerControls controls;
 
@@ -22,14 +18,13 @@ public class BlasterGun : MonoBehaviour
 
     void FireGun()
     {
-        rayEnd = rayStart.localPosition * 20;
-        ray = new Ray(rayStart.position, rayEnd);
+        Debug.Log("Trigger Pulled!!!");
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-            GameObject impactEffectGO = Instantiate(impactEffect, hit.point, Quaternion.identity) as GameObject;
-            Destroy(impactEffectGO, 5);
-        }
+        GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.AddForce(firepoint.forward * bulletForce, ForceMode.Impulse);
+
+        Debug.Log("Gun Fired!!!");
     }
 
     void OnEnable()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public int health = 100;                                            
 
     [Header("Movement Settings")]
-    public int playerSpeed = 5;
+    public int playerSpeed = 2;
     public float turnSpeed = 5.0f;
 
     PlayerControls controls;
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour
         controls.Gameplay.MoveRight.canceled += ctx => movement.x = 0;
 
         controls.Gameplay.Run.performed += ctx => Run();
-        controls.Gameplay.Run.canceled += ctx => Walk();
+        controls.Gameplay.Run.canceled += ctx => Run();
 
         rb = GetComponent<Rigidbody>();
     }
@@ -44,24 +45,40 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * playerSpeed * Time.deltaTime);
-        // If the player is going left
-        if (movement.x == -1)
+        // Gets the dirction based on 
+        if (movement.x == -1 && movement.z == 0)
         {
             rotation = -90;
         }
-        else if (movement.x == 1)
+        else if (movement.x == 1 && movement.z == 0)
         {
             rotation = 90;
         }
-        else if (movement.z == -1)
+        else if (movement.z == -1 && movement.x == 0)
         {
             rotation = 180;
         }
-        else if (movement.z == 1)
+        else if (movement.z == 1 && movement.x == 0)
         {
             rotation = 0;
         }
-
+        else if (movement.x == 1 && movement.z == 1)
+        {
+            rotation = 45;
+        }
+        else if (movement.x == -1 && movement.z == 1)
+        {
+            rotation = -45;
+        }
+        else if (movement.x == 1 && movement.z == -1)
+        {
+            rotation = 135;
+        }
+        else if (movement.x == -1 && movement.z == -1)
+        {
+            rotation = -135;
+        }
+        
         // Rotate the player by converting the angles into a quaternion.
         Quaternion target = Quaternion.Euler(movement.x, rotation, movement.z);
 
@@ -72,17 +89,27 @@ public class PlayerController : MonoBehaviour
     void Run()
     {
         Debug.Log("Player is running");
-        playerSpeed = 10;
+        playerSpeed = 5;
+
+        if (playerSpeed == 1)
+        {
+
+        }
+        else
+        {
+            playerSpeed = 2;
+        }
     }
 
     void Walk()
     {
         Debug.Log("Player is walking");
-        playerSpeed = 5;
+        
     }
 
     void OnEnable()
     {
+        // Enables the player's input when the game object is enabled
         controls.Gameplay.Enable();
     }
 

@@ -6,6 +6,7 @@ public class ScoreManager : MonoBehaviour
 
     [Header("Score Settings")]
     public int score = 0;
+    private int finalScore = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -20,5 +21,10 @@ public class ScoreManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public int CalculateFinalScore()
+    {
+        return finalScore;
     }
 }

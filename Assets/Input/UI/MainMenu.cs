@@ -25,6 +25,14 @@ public class @MainMenu : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ConfirmSelection"",
+                    ""type"": ""Button"",
+                    ""id"": ""35f9cf69-abd0-46c2-93bc-f4561f59510b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -49,6 +57,17 @@ public class @MainMenu : IInputActionCollection, IDisposable
                     ""action"": ""MoveSelection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3774dcf3-1cc6-4b71-91ba-b937840d735c"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ConfirmSelection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -58,6 +77,7 @@ public class @MainMenu : IInputActionCollection, IDisposable
         // MenuContol
         m_MenuContol = asset.FindActionMap("MenuContol", throwIfNotFound: true);
         m_MenuContol_MoveSelection = m_MenuContol.FindAction("MoveSelection", throwIfNotFound: true);
+        m_MenuContol_ConfirmSelection = m_MenuContol.FindAction("ConfirmSelection", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -108,11 +128,13 @@ public class @MainMenu : IInputActionCollection, IDisposable
     private readonly InputActionMap m_MenuContol;
     private IMenuContolActions m_MenuContolActionsCallbackInterface;
     private readonly InputAction m_MenuContol_MoveSelection;
+    private readonly InputAction m_MenuContol_ConfirmSelection;
     public struct MenuContolActions
     {
         private @MainMenu m_Wrapper;
         public MenuContolActions(@MainMenu wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveSelection => m_Wrapper.m_MenuContol_MoveSelection;
+        public InputAction @ConfirmSelection => m_Wrapper.m_MenuContol_ConfirmSelection;
         public InputActionMap Get() { return m_Wrapper.m_MenuContol; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -125,6 +147,9 @@ public class @MainMenu : IInputActionCollection, IDisposable
                 @MoveSelection.started -= m_Wrapper.m_MenuContolActionsCallbackInterface.OnMoveSelection;
                 @MoveSelection.performed -= m_Wrapper.m_MenuContolActionsCallbackInterface.OnMoveSelection;
                 @MoveSelection.canceled -= m_Wrapper.m_MenuContolActionsCallbackInterface.OnMoveSelection;
+                @ConfirmSelection.started -= m_Wrapper.m_MenuContolActionsCallbackInterface.OnConfirmSelection;
+                @ConfirmSelection.performed -= m_Wrapper.m_MenuContolActionsCallbackInterface.OnConfirmSelection;
+                @ConfirmSelection.canceled -= m_Wrapper.m_MenuContolActionsCallbackInterface.OnConfirmSelection;
             }
             m_Wrapper.m_MenuContolActionsCallbackInterface = instance;
             if (instance != null)
@@ -132,6 +157,9 @@ public class @MainMenu : IInputActionCollection, IDisposable
                 @MoveSelection.started += instance.OnMoveSelection;
                 @MoveSelection.performed += instance.OnMoveSelection;
                 @MoveSelection.canceled += instance.OnMoveSelection;
+                @ConfirmSelection.started += instance.OnConfirmSelection;
+                @ConfirmSelection.performed += instance.OnConfirmSelection;
+                @ConfirmSelection.canceled += instance.OnConfirmSelection;
             }
         }
     }
@@ -139,5 +167,6 @@ public class @MainMenu : IInputActionCollection, IDisposable
     public interface IMenuContolActions
     {
         void OnMoveSelection(InputAction.CallbackContext context);
+        void OnConfirmSelection(InputAction.CallbackContext context);
     }
 }

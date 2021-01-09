@@ -12,6 +12,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ConfirmSelection",
+                    "type": "Button",
+                    "id": "35f9cf69-abd0-46c2-93bc-f4561f59510b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -34,6 +42,17 @@
                     "processors": "Scale",
                     "groups": "",
                     "action": "MoveSelection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3774dcf3-1cc6-4b71-91ba-b937840d735c",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConfirmSelection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
