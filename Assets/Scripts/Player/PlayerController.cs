@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     public int playerSpeed = 2;
     public float turnSpeed = 5.0f;
+    public float gravity = -9.81f;
 
     PlayerControls controls;
 
@@ -53,7 +54,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        characterController.Move(movement * Time.deltaTime * playerSpeed);
         // Gets the dirction based on 
         if (movement.x == -1 && movement.z == 0)
         {
@@ -93,6 +93,10 @@ public class PlayerController : MonoBehaviour
 
         // Dampen towards the target rotation
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * turnSpeed);
+
+        movement.y = gravity * Time.deltaTime;
+
+        characterController.Move(movement * Time.deltaTime * playerSpeed);
     }
 
     void Run()
