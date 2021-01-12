@@ -30,17 +30,17 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+
+        ScoreManager.instance.CalculateFinalScore();
         // if the player's score is more than the current high score
-        if (score > hiScore)
+        if (ScoreManager.instance.score > hiScore)
         {
             // Sets high score to the player's score
-            hiScore = score;
+            hiScore = ScoreManager.instance.score;
             // Sets the player pref for the high s
             PlayerPrefs.SetInt("hiscore", hiScore);
             // Saves the player prefs
             PlayerPrefs.Save();
-            // Resets the player's score to 0
-            score = 0;
         }
     }
 }

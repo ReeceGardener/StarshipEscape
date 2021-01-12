@@ -3,6 +3,8 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    public static Enemy instance { set; get; }
+
     [Header("Setup Settings")]
     public NavMeshAgent agent;
     public Transform player;
@@ -21,6 +23,7 @@ public class Enemy : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    public Transform firepoint;
 
     [Header("States Settings")]
     public float sightRange;
@@ -35,6 +38,14 @@ public class Enemy : MonoBehaviour
 
         // Gets the enemy's NavMeshAgent component
         agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
     private void Update()
@@ -59,7 +70,7 @@ public class Enemy : MonoBehaviour
 
         /* If the player is not in the sight range and is in the attack range 
            the enemy will attack the player */
-        if (!playerInSightRange && playerInAttackRange)
+        if (playerInSightRange && playerInAttackRange)
         {
             AttackPlayer();
         }
@@ -113,7 +124,7 @@ public class Enemy : MonoBehaviour
         if (!alreadyAttacked)
         {
             // Attack
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            Rigidbody rb = Instantiate(projectile, firepoint.position, Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             rb.AddForce(transform.up * 8f, ForceMode.Impulse);
 
@@ -135,6 +146,7 @@ public class Enemy : MonoBehaviour
     }
     private void DestroyEnemy()
     {
+        ScoreManager.instance.score += 100;
         Destroy(gameObject);
     }
 

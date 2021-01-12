@@ -2,11 +2,10 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class MainMenuManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     string buttonName;
 
-    public Text hiScoreText;
     public EventSystem eventSystem;
 
     MainMenu controls;
@@ -18,36 +17,30 @@ public class MainMenuManager : MonoBehaviour
         controls.MenuContol.ConfirmSelection.performed += ctx => ConfirmSelection();
     }
 
-    private void Start()
-    {
-        // When the game starts the game will get the high score from the game manager
-        hiScoreText.text = "HI SCORE: " + GameManager.instance.hiScore;
-    }
-
-    public void PlayGame(string level)
-    {
-        // Loads 
-        SceneLoader.instance.LoadLevel(level);
-    }
-
-    public void QuitGame()
-    {
-        // Quits the game
-        Application.Quit();
-    }
-
     public void ConfirmSelection()
     {
         buttonName = eventSystem.currentSelectedGameObject.name;
         switch (buttonName)
         {
-            case "PlayButton":
-                PlayGame("MainScene");
+            case "RetryButton":
+                RetryLevel("MainScene");
+                //Time.timeScale = 1;
                 break;
-            case "QuitButton":
-                QuitGame();
+            case "MainMenuButton":
+                MainMenu("MainMenu");
+                //Time.timeScale = 1;
                 break;
         }
+    }
+
+    public void RetryLevel(string level)
+    {
+        SceneLoader.instance.LoadLevel(level);
+    }
+
+    public void MainMenu(string level)
+    {
+        SceneLoader.instance.LoadLevel(level);
     }
 
     void OnEnable()

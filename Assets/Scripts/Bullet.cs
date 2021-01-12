@@ -7,9 +7,19 @@ public class Bullet : MonoBehaviour
     public GameObject impactEffect;
     private void OnCollisionEnter(Collision collision)
     {
-        Instantiate(impactEffect, transform.position, Quaternion.identity);
-
-        Destroy(impactEffect, 5f);
+        if (collision.gameObject.tag == "Wall")
+        {
+            Instantiate(impactEffect, transform.position, Quaternion.identity);
+            Destroy(obj: impactEffect, t: 5f);
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Enemy.instance.TakeDamage(25);
+        }
+        if (collision.gameObject.tag == "Player")
+        {
+            PlayerController.instance.TakeDamage(10);
+        }
         Destroy(gameObject);
     }
 }

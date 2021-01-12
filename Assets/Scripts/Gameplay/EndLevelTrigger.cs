@@ -4,13 +4,20 @@ public class EndLevelTrigger : MonoBehaviour
 {
     public string levelName;
 
+    public GameObject gameOverScreen;
+    AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("You have won!!!");
-        Debug.Log("Score: " + "100");
         ScoreManager.instance.score += 100;
-        GameManager.instance.score = ScoreManager.instance.score;
         GameManager.instance.GameOver();
-        SceneLoader.instance.LoadLevel(levelName);
+        //Time.timeScale = 0;
+        gameOverScreen.SetActive(true);
+        audioSource.Play();
     }
 }

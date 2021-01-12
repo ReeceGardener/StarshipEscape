@@ -7,6 +7,8 @@ public class BlasterGun : MonoBehaviour
     public GameObject bulletPrefab;
     public float bulletForce = 20f;
 
+    AudioSource audioSource;
+
     PlayerControls controls;
 
     void Awake()
@@ -14,17 +16,16 @@ public class BlasterGun : MonoBehaviour
         controls = new PlayerControls();
 
         controls.Gameplay.FireGun.performed += ctx => FireGun();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void FireGun()
     {
-        Debug.Log("Trigger Pulled!!!");
-
+        audioSource.Play();
         GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.AddForce(firepoint.forward * bulletForce, ForceMode.Impulse);
-
-        Debug.Log("Gun Fired!!!");
     }
 
     void OnEnable()
