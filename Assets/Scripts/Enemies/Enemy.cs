@@ -23,7 +23,10 @@ public class Enemy : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    public GameObject bulletPrefab;
+    public float bulletForce = 20f;
     public Transform firepoint;
+    AudioSource audioSource;
 
     [Header("States Settings")]
     public float sightRange;
@@ -38,6 +41,8 @@ public class Enemy : MonoBehaviour
 
         // Gets the enemy's NavMeshAgent component
         agent = GetComponent<NavMeshAgent>();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -124,9 +129,14 @@ public class Enemy : MonoBehaviour
         if (!alreadyAttacked)
         {
             // Attack
-            Rigidbody rb = Instantiate(projectile, firepoint.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            //Rigidbody rb = Instantiate(projectile, firepoint.position, Quaternion.identity).GetComponent<Rigidbody>();
+            //rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+
+            audioSource.Play();
+            GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
+            Rigidbody rb = bullet.GetComponent<Rigidbody>();
+            rb.AddForce(firepoint.forward * bulletForce, ForceMode.Impulse);
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

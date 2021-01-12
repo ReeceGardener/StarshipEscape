@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             Instantiate(impactEffect, transform.position, Quaternion.identity);
-            Destroy(obj: impactEffect, t: 5f);
+            Destroy(obj: impactEffect, t: 0.5f);
         }
         if (collision.gameObject.tag == "Enemy")
         {
