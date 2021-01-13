@@ -3,8 +3,6 @@
 public class EndLevelTrigger : MonoBehaviour
 {
     public string levelName;
-
-    public GameObject gameOverScreen;
     AudioSource audioSource;
 
     private void Awake()
@@ -15,9 +13,7 @@ public class EndLevelTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         ScoreManager.instance.score += 100;
-        GameManager.instance.GameOver();
-        //Time.timeScale = 0;
-        gameOverScreen.SetActive(true);
+        GameManager.instance.GameOver(false);
         audioSource.Play();
     }
 }

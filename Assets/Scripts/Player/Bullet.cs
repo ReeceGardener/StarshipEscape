@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
         }
         if (collision.gameObject.tag == "Player")
         {
-            PlayerController.instance.TakeDamage(10);
+            PlayerController.instance.TakeDamage(50);
         }
         Destroy(gameObject);
     }

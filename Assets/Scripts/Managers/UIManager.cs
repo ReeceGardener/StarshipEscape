@@ -4,7 +4,12 @@ using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance { set; get; }
+
     string buttonName;
+    public GameObject gameOverScreen;
+    public Text gameResultText;
+    public string gameResult;
 
     public EventSystem eventSystem;
 
@@ -17,6 +22,19 @@ public class UIManager : MonoBehaviour
         controls.MenuContol.ConfirmSelection.performed += ctx => ConfirmSelection();
     }
 
+    private void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    private void Update()
+    {
+        gameResultText.text = gameResult;
+    }
+
     public void ConfirmSelection()
     {
         buttonName = eventSystem.currentSelectedGameObject.name;
@@ -24,11 +42,9 @@ public class UIManager : MonoBehaviour
         {
             case "RetryButton":
                 RetryLevel("MainScene");
-                //Time.timeScale = 1;
                 break;
             case "MainMenuButton":
                 MainMenu("MainMenu");
-                //Time.timeScale = 1;
                 break;
         }
     }
@@ -36,11 +52,13 @@ public class UIManager : MonoBehaviour
     public void RetryLevel(string level)
     {
         SceneLoader.instance.LoadLevel(level);
+        Time.timeScale = 1;
     }
 
     public void MainMenu(string level)
     {
         SceneLoader.instance.LoadLevel(level);
+        Time.timeScale = 1;
     }
 
     void OnEnable()

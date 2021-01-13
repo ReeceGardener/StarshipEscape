@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public float turnSpeed = 5.0f;
     public float gravity = -9.81f;
 
+    public bool hasKeyCard = false;
+
     PlayerControls controls;
 
     CharacterController characterController;
@@ -119,7 +121,7 @@ public class PlayerController : MonoBehaviour
     }
     private void LoseGame()
     {
-
+        GameManager.instance.GameOver(true);
     }
 
     void OnEnable()

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { set; get; }
-
+    
     public int hiScore;
     public int score = 0;
 
@@ -28,19 +28,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameOver()
+    public void GameOver(bool hasLost)
     {
+        Time.timeScale = 0;
 
-        ScoreManager.instance.CalculateFinalScore();
-        // if the player's score is more than the current high score
-        if (ScoreManager.instance.score > hiScore)
+        if (hasLost == true)
         {
-            // Sets high score to the player's score
-            hiScore = ScoreManager.instance.score;
-            // Sets the player pref for the high s
-            PlayerPrefs.SetInt("hiscore", hiScore);
-            // Saves the player prefs
-            PlayerPrefs.Save();
+            ScoreManager.instance.score = 0;
+            UIManager.instance.gameResult = "YOU LOST!!!";
         }
+        else
+        {
+            ScoreManager.instance.CalculateFinalScore();
+
+            UIManager.instance.gameResult = "YOU WON!!!";
+            // if the player's score is more than the current high score
+            if (ScoreManager.instance.score > hiScore)
+            {
+                // Sets high score to the player's score
+                hiScore = ScoreManager.instance.score;
+                // Sets the player pref for the high s
+                PlayerPrefs.SetInt("hiscore", hiScore);
+                // Saves the player prefs
+                PlayerPrefs.Save();
+            }
+        }
+        UIManager.instance.gameOverScreen.SetActive(true);
     }
 }
