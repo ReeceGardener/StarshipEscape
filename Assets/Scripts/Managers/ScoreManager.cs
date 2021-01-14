@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour
 
     [Header("Score Settings")]
     public int score = 0;
-    private int finalScore = 0;
+    public int finalScore = 0;
     public int fullHealthReward = 2500;
     public int knockOutReward = 100;
     public Text scoreText;

@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public string gameResult;
 
     public EventSystem eventSystem;
+    AudioSource audioSource;
 
     MainMenu controls;
 
@@ -20,6 +21,9 @@ public class UIManager : MonoBehaviour
         controls = new MainMenu();
 
         controls.MenuContol.ConfirmSelection.performed += ctx => ConfirmSelection();
+
+        // Gets the UI Audio Source
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -37,26 +41,33 @@ public class UIManager : MonoBehaviour
 
     public void ConfirmSelection()
     {
-        buttonName = eventSystem.currentSelectedGameObject.name;
-        switch (buttonName)
+        if (GameManager.instance.gameOver == true)
         {
-            case "RetryButton":
-                RetryLevel("MainScene");
-                break;
-            case "MainMenuButton":
-                MainMenu("MainMenu");
-                break;
+            buttonName = eventSystem.currentSelectedGameObject.name;
+            switch (buttonName)
+            {
+                case "RetryButton":
+                    RetryLevel("MainScene");
+                    break;
+                case "MainMenuButton":
+                    MainMenu("MainMenu");
+                    break;
+            }
         }
     }
 
     public void RetryLevel(string level)
     {
+        audioSource.Play();
+        GameManager.instance.gameOver = false;
         SceneLoader.instance.LoadLevel(level);
         Time.timeScale = 1;
     }
 
     public void MainMenu(string level)
     {
+        audioSource.Play();
+        GameManager.instance.gameOver = false;
         SceneLoader.instance.LoadLevel(level);
         Time.timeScale = 1;
     }

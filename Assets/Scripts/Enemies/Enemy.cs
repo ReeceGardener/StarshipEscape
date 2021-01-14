@@ -22,10 +22,10 @@ public class Enemy : MonoBehaviour
     [Header("Attacking Settings")]
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public GameObject projectile;
     public GameObject bulletPrefab;
     public float bulletForce = 20f;
     public Transform firepoint;
+    public AudioSource gunAudioSource;
     AudioSource audioSource;
 
     [Header("States Settings")]
@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
         // Gets the enemy's NavMeshAgent component
         agent = GetComponent<NavMeshAgent>();
 
+        // Gets the enemy's Audio Source
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -128,12 +129,7 @@ public class Enemy : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            // Attack
-            //Rigidbody rb = Instantiate(projectile, firepoint.position, Quaternion.identity).GetComponent<Rigidbody>();
-            //rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            //rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-
-            audioSource.Play();
+            gunAudioSource.Play();
             GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             rb.AddForce(firepoint.forward * bulletForce, ForceMode.Impulse);
@@ -151,6 +147,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        audioSource.Play();
 
         if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
     }

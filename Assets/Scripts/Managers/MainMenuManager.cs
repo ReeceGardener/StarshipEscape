@@ -8,6 +8,7 @@ public class MainMenuManager : MonoBehaviour
 
     public Text hiScoreText;
     public EventSystem eventSystem;
+    AudioSource audioSource;
 
     MainMenu controls;
 
@@ -16,6 +17,9 @@ public class MainMenuManager : MonoBehaviour
         controls = new MainMenu();
 
         controls.MenuContol.ConfirmSelection.performed += ctx => ConfirmSelection();
+
+        // Gets the Main Menu Audio Source
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -26,12 +30,18 @@ public class MainMenuManager : MonoBehaviour
 
     public void PlayGame(string level)
     {
-        // Loads 
+        // Plays a audio file
+        audioSource.Play();
+
+        // Loads into the main level
         SceneLoader.instance.LoadLevel(level);
     }
 
     public void QuitGame()
     {
+        // Plays a audio file
+        audioSource.Play();
+
         // Quits the game
         Application.Quit();
     }

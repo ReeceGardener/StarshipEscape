@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -12,13 +11,14 @@ public class PlayerController : MonoBehaviour
     public Slider healthBar;
 
     [Header("Movement Settings")]
-    public int playerSpeed = 2;
+    public float playerSpeed = 2;
     public float turnSpeed = 5.0f;
     public float gravity = -9.81f;
 
     public bool hasKeyCard = false;
 
     PlayerControls controls;
+    AudioSource audioSource;
 
     CharacterController characterController;
     Vector3 movement;
@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
         controls.Gameplay.Run.canceled += ctx => Walk();
 
         characterController = GetComponent<CharacterController>();
+
+        // Gets the enemy's Audio Source
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -116,6 +119,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        audioSource.Play();
 
         if (health <= 0) Invoke(nameof(LoseGame), 0.5f);
     }
