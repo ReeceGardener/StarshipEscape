@@ -3,8 +3,6 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public static Enemy instance { set; get; }
-
     [Header("Setup Settings")]
     public NavMeshAgent agent;
     public Transform player;
@@ -26,7 +24,7 @@ public class Enemy : MonoBehaviour
     public float bulletForce = 20f;
     public Transform firepoint;
     public AudioSource gunAudioSource;
-    AudioSource audioSource;
+   [SerializeField] AudioSource audioSource;
 
     [Header("States Settings")]
     public float sightRange;
@@ -44,14 +42,6 @@ public class Enemy : MonoBehaviour
 
         // Gets the enemy's Audio Source
         audioSource = GetComponent<AudioSource>();
-    }
-
-    private void Start()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
     }
 
     private void Update()

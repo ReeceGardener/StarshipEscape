@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  finalScore: 0
   fullHealthReward: 2500
   knockOutReward: 100
   scoreText: {fileID: 0}
   finalScoreText: {fileID: 0}
-  gameOverScreen: {fileID: 0}

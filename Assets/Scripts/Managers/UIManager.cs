@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     string buttonName;
     public GameObject gameOverScreen;
     public Text gameResultText;
+    public Text ammoCountText;
     public string gameResult;
 
     public EventSystem eventSystem;
@@ -37,6 +38,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         gameResultText.text = gameResult;
+        ammoCountText.text = "Ammo:" + BlasterGun.instance.currentAmmo;
     }
 
     public void ConfirmSelection()
