@@ -100,6 +100,7 @@ public class Enemy : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
+        // 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, groundMask))
         {
             walkPointSet = true;
@@ -108,6 +109,7 @@ public class Enemy : MonoBehaviour
 
     private void ChasePlayer()
     {
+        // Calls the function set destination as the player position
         agent.SetDestination(player.position);
     }
 
@@ -136,19 +138,24 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        // Takes away health 
         health -= damage;
         audioSource.Play();
 
+        // If the enemy's health is 0 than invoke the destory enemy function
         if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
     }
     private void DestroyEnemy()
     {
+        // Give the player points for destroying the enemy
         ScoreManager.instance.score += 100;
+        // Removes the game object from the game
         Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()
     {
+        // Draws a wire sphere to visualise the attack range and sight range
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;

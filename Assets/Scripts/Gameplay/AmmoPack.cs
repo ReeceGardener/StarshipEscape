@@ -8,7 +8,7 @@ public class AmmoPack : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (BlasterGun.instance.currentAmmo != BlasterGun.instance.maxAmmo && PlayerController.instance.health != 0)
+            if (BlasterGun.instance.currentAmmo != BlasterGun.instance.maxAmmo)
             {
                 ammoAmount = BlasterGun.instance.maxAmmo - BlasterGun.instance.currentAmmo;
                 BlasterGun.instance.currentAmmo += ammoAmount;
